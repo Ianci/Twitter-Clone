@@ -1,0 +1,39 @@
+.sidebar-list{
+    list-style: none;
+    margin-bottom: 2.25rem;
+    top: 0;
+    padding-bottom: 30px;
+}
+.sidebar-title{
+    display: inline-block;
+    border: 0 solid black;
+    color: #fff;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+    font-size: 18px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+}
+.sidebar-icon{
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+    width: 100%;
+    margin-right: 20px;
+}
+.sidebar-list-item{
+    margin-bottom: 0.7rem;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+}
+.MuiSvgIcon-root{
+    font-size: 2rem !important;
+}

@@ -4,4 +4,5 @@
 
 React
 Firebase 
-Emotion
+MaterialUI
+MaterialUI Icons

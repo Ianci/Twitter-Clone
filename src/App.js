@@ -1,11 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import Home from './pages/home/Home'
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <h1>From App</h1>
+    <div className="app">
+      <Router>
+        <Switch>
+          {["/", "/home", "/explorer", "/notifications", "/messages", "/bookmark", 
+          "/lists", "/profile", "/options"].map(path =>(
+            <Route key={path}
+            path={path} 
+            component={Home} />
+          ))}
+        </Switch>
+      </Router>
     </div>
   );
 }
