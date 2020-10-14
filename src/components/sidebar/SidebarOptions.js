@@ -12,7 +12,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 export const sidebarOptions = [
     {
         title: "",
-        icon: <TwitterIcon style={{color: "#fff"}} />,
+        icon: <TwitterIcon style={{color: "#fff", borderRadius: "90px"}} />,
         path: "/home"
     },
     {

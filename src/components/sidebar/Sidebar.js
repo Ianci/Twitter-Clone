@@ -1,7 +1,12 @@
 import React from 'react';
 import { sidebarOptions } from './SidebarOptions'
+import  SidebarAccount  from './SidebarAccount'
 import './Sidebar.css'
+
 import { Link } from 'react-router-dom'
+import  TweetButton  from './ButtonSideBar'
+
+
 const Sidebar = () => {
     return ( 
         <div className="sidebar">
@@ -16,6 +21,12 @@ const Sidebar = () => {
                 )
             })}
             </ul>
+            <div className="tweet-button">
+            <TweetButton />
+            </div>
+            <div className="sidebar-account">
+                <SidebarAccount />
+            </div>
         </div>
      );
 }

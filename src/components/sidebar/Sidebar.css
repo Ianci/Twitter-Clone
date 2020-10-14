@@ -1,8 +1,10 @@
+/*Sidebar */
 .sidebar-list{
     list-style: none;
-    margin-bottom: 2.25rem;
+    margin-bottom: 0;
+    margin-top: 5px;
+    padding-bottom: 0;
     top: 0;
-    padding-bottom: 30px;
 }
 .sidebar-title{
     display: inline-block;
@@ -26,14 +28,80 @@
     height: 2.25rem;
     width: 100%;
     margin-right: 20px;
+    padding: 2px;
+    transition: all 0.3s ease-out;
+}
+.sidebar-icon:hover {
+    background: rgba(51,153,255,0.1); 
+    color: #00BFFF;
+    border-radius: 50px;
 }
 .sidebar-list-item{
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.4rem;
+    width: max-content;
 }
 a{
     text-decoration: none;
     color: #fff;
 }
 .MuiSvgIcon-root{
-    font-size: 2rem !important;
+    font-size: 1.9rem !important;
+}
+
+
+/* Tweet Button Div */
+.tweet-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-left: 30px;
+}
+
+
+/*Account */ 
+.sidebar-account{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 1rem;
+    margin-left: 30px;
+    padding-top: 0;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    width: 110%;
+}
+.sidebar-account:hover{
+    background: rgba(51,153,255,0.1); 
+    color: #00BFFF;
+    border-radius: 50px;
+   transition: all
+}
+.sidebar-profile-picture{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position:-50% 50%;
+    padding: 1rem 0.5rem 0.3rem 0.3rem;
+}
+.account-name{
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+}
+.p-name{
+    padding-left: 10px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+.s-account{
+    position: absolute;
+    padding-left: 10px;
+    color: grey;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
 }
