@@ -1,4 +1,8 @@
 /*Sidebar */
+.sidebar{
+    width: 290px;
+    border-right: 1px solid grey;
+}
 .sidebar-list{
     list-style: none;
     margin-bottom: 0;
@@ -54,8 +58,9 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     padding-left: 30px;
+    padding-right: 15px;
+    width: 75%
 }
 
 
@@ -69,13 +74,15 @@ a{
     padding-top: 0;
     padding-left: 10px;
     padding-bottom: 10px;
-    width: 110%;
+    padding-right: 20px;
+    width: 77%;
 }
 .sidebar-account:hover{
     background: rgba(51,153,255,0.1); 
     color: #00BFFF;
     border-radius: 50px;
-   transition: all
+   transition: all;
+   padding-right: 20px;
 }
 .sidebar-profile-picture{
     width: 40px;

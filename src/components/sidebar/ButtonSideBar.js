@@ -4,10 +4,11 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme =>({
     root: {
+      display: "block",  
       backgroundColor: "rgb(26, 145, 218)",
       background: "rgb(26, 145, 218)",
       borderRadius: 50,
-      width: "100%",
+      width: "300px",
       border: 0,
       color: 'white',
       height: 48,
