@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import  SidebarAvatar  from './SidebarAvatar'
-import { Box } from '@material-ui/core'
+
 
 
 const SidebarAccount = () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import TweetForm from './TweetForm'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,16 +27,27 @@ const useStyles = makeStyles((theme) => ({
         color: "rgb(255, 255, 255)",
         fontSize: "1.2rem",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
-
+    },
+    TweetInput: {
+        gridColumnStart: 1,
+        gridColumnEnd: 2,
+        position: "absolute",
+        marginTop: "3.1rem",
+        display: "flex",
+        width: "542px",
     }
 }));
 const MainPage = () => {
     const classes = useStyles()
     return ( 
         <div className={classes.container}>
+            
             <div className={classes.mainSection}>
                 <span className={classes.inicio}>Inicio</span>
                 <StarBorderIcon style={{color: "rgb(72,209,204)"}}/>
+            </div>
+            <div className={classes.TweetInput}>
+                    <TweetForm />
             </div>
         </div>
         
