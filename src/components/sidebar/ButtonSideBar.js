@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme =>({
     root: {
-      display: "block",  
+      display: (props) => props.size === "medium" ? 'block' : 'flex',
+
       backgroundColor: "rgb(26, 145, 218)",
       background: "rgb(26, 145, 218)",
       borderRadius: 50,
-      width: "300px",
+
+      width: (props) => props.size === "medium" ? '300px' : '20px',
+
       border: 0,
       color: 'white',
 
@@ -17,6 +20,7 @@ const useStyles = makeStyles(theme =>({
       ? '45px'
       : '30px',
 
+      left: (props) => props.size === "medium" ? '0' : '90%',
       padding: '0 50px',
       '&:hover': {
         backgroundColor: "rgb(26, 145, 218)",
