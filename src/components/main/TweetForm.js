@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Img2 from '../../images/img2.jpeg'
-
+import TextareaAutosize from 'react-autosize-textarea';
 const useStyles = makeStyles((theme) =>({
     root: {
         display: 'flex',
@@ -32,11 +32,11 @@ const TweetForm = () => {
     const classes = useStyles()
 
     //TextArea Fn to resizing height
-    
+
     return ( 
         <>
         <Avatar src={Img2} alt="account-profile" className={classes.root}/>
-        <textarea className={classes.inputTweet} placeholder="¿Qué está pasando?" />
+        <TextareaAutosize className={classes.inputTweet} placeholder="¿Qué está pasando?" />
         </>
      );
 }
