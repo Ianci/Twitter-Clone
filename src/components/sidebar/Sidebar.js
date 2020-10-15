@@ -4,7 +4,7 @@ import  SidebarAccount  from './SidebarAccount'
 import './Sidebar.css'
 
 import { Link } from 'react-router-dom'
-import  TweetButton  from './ButtonSideBar'
+import  { MediumTweetButton }  from './ButtonSideBar'
 
 
 const Sidebar = () => {
@@ -22,7 +22,7 @@ const Sidebar = () => {
             })}
             </ul>
             <div className="tweet-button">
-            <TweetButton />
+            <MediumTweetButton />
             </div>
             <div className="sidebar-account">
                 <SidebarAccount />

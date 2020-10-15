@@ -7,7 +7,7 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-
+import AppsIcon from '@material-ui/icons/Apps';
 
 export const sidebarOptions = [
     {
@@ -22,7 +22,7 @@ export const sidebarOptions = [
     },
     {
         title: "Explorar",
-        icon: <TwitterIcon />,
+        icon: <AppsIcon />,
         path: "/explorer"
     },
     {
