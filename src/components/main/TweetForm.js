@@ -25,12 +25,16 @@ const useStyles = makeStyles((theme) =>({
         height: "40px",
         color: "#fff",
         marginLeft: theme.spacing(1),
-        overflow: "hidden",
+        overflowX: "hidden",
+        overflowY: "hidden",
         marginTop: theme.spacing(1),
         whiteSpace: "no-wrap",
         fontSize: "1.2rem",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
-        resize: "none"
+        resize: "none",
+        '&::-webkit-scrollbar': {
+            display: "none",
+        }
     },
     iconsContainer: {
         display: "flex",
@@ -41,7 +45,6 @@ const useStyles = makeStyles((theme) =>({
     tweetBtn: {
         left: "50%",
         height: "10px",
-
     }
     
 }))
@@ -53,7 +56,7 @@ const TweetForm = () => {
     return ( 
         <>
         <Avatar src={Img2} alt="account-profile" className={classes.root}/>
-        <TextareaAutosize className={classes.inputTweet} placeholder="¿Qué está pasando?" />
+        <TextareaAutosize maxRows={4}  className={classes.inputTweet} placeholder="¿Qué está pasando?" />
         <br style={{border: "1px solid white"}}/>
         <div className={classes.iconsContainer}>
         {TweetIcons.map((icons, index)=>{
