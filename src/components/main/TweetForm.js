@@ -10,19 +10,19 @@ import { SmallTweetButton } from '../sidebar/ButtonSideBar'
 
 const useStyles = makeStyles((theme) =>({
     root: {
-        display: 'flex',
-        margin: theme.spacing(3),
+        
+        margin: theme.spacing(2),
         height: theme.spacing(6),
         width: theme.spacing(6),
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1)
         },
     inputTweet: {
-        width: "100%",
+        flex: 0.6,
         border: "none",
         background: "none",
         outline: "none",
-        height: "40px",
+        height: "55px",
         color: "#fff",
         marginLeft: theme.spacing(1),
         overflowX: "hidden",
@@ -30,43 +30,49 @@ const useStyles = makeStyles((theme) =>({
         marginTop: theme.spacing(1),
         whiteSpace: "no-wrap",
         fontSize: "1.2rem",
+        width: "500px",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
         resize: "none",
         '&::-webkit-scrollbar': {
             display: "none",
         }
     },
-    iconsContainer: {
-        display: "flex",
-        position: "absolute",
-        top: "100%",
-        left: "16%",
+    sendTweet: {
+        float: "right"
     },
-    tweetBtn: {
-        left: "50%",
-        height: "10px",
+    avatarTweet: {
+        height: "fit-content"
     }
-    
 }))
 const TweetForm = () => {
     const classes = useStyles()
-
+    function clicked (){
+        console.log('The button work')
+    }
     //TextArea Fn to resizing height
 
     return ( 
         <>
-        <Avatar src={Img2} alt="account-profile" className={classes.root}/>
-        <TextareaAutosize maxRows={4}  className={classes.inputTweet} placeholder="¿Qué está pasando?" />
-        <br style={{border: "1px solid white"}}/>
-        <div className={classes.iconsContainer}>
-        {TweetIcons.map((icons, index)=>{
-            return(
-                <ButtonBase centerRipple="true">
-                    <span>{icons.icon}</span>
-                </ButtonBase>
-            )
-        })}
-        <SmallTweetButton />
+        <div className={classes.avatarTweet}>
+            <Avatar src={Img2} alt="account-profile" className={classes.root}/>
+        </div>
+        <div className={classes.tweetBody}>
+
+            <div className={classes.tweetTextArea}>
+                <TextareaAutosize maxRows={4}  className={classes.inputTweet} placeholder="¿Qué está pasando?" />
+            </div>
+            <div className={classes.iconsContainer} >
+                {TweetIcons.map((icons, index)=>{
+                    return(
+                        <ButtonBase centerRipple="true">
+                            <span>{icons.icon}</span>
+                        </ButtonBase>
+                    )
+                })}
+                <div className={classes.sendTweet} onClick={clicked}>
+                 <SmallTweetButton />
+                </div>
+            </div>
         </div>
         </>
      );

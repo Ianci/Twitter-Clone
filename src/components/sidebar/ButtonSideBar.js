@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme =>({
     root: {
-      display: (props) => props.size === "medium" ? 'block' : 'flex',
+      display: (props) => props.size === "medium" ? 'block' : 'inline-flex',
 
       backgroundColor: "rgb(26, 145, 218)",
       background: "rgb(26, 145, 218)",
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme =>({
       ? '45px'
       : '30px',
 
-      left: (props) => props.size === "medium" ? '0' : '90%',
+      
       padding: '0 50px',
       '&:hover': {
         backgroundColor: "rgb(26, 145, 218)",
@@ -36,10 +36,11 @@ const useStyles = makeStyles(theme =>({
   }));
 
 function MyButton(props){
-  const { size , ...other} = props
+  const { size , onClick , ...other} = props
   const classes = useStyles(props);
   return ( 
             <Button 
+            onClick={onClick ? onClick : () => {}}
             variant="contained"
             classes={{
             root: classes.root,

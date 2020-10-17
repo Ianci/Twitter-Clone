@@ -26,7 +26,7 @@ const SidebarAccount = () => {
         </div> 
         <ExpandMoreIcon style={{color: "white", fontSize: "1rem"}}/>
         <Menu
-        id="simple-menu"
+        id="sidebar-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
