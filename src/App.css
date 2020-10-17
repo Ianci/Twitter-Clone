@@ -9,10 +9,10 @@ body {
   
   .app {
     display: flex;
-    height: 100vh;
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 10px;
-    background-color: #141d29
+    background-color: #141d29;
+    min-height: 100vh;
   }

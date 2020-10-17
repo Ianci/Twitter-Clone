@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) =>({
     tweetContainer: {
         display: "flex",
         maxWidth: "600px",
-        wordBreak: "break-all",
-        width: "600px"
+        wordBreak: "break-word",
+        width: "600px",
+        borderBottom: "1px solid grey"
     },
     tweetInfo: {
         height: "fit-content",
@@ -67,6 +68,15 @@ const useStyles = makeStyles((theme) =>({
         display: "flex",
         justifyContent: "space-around",
         padding: "10px 10px"
+    },
+    image_user_Tweet:{
+        borderRadius: "40px",
+        padding: theme.spacing(2),
+        float: "center",
+        width: "480px",
+        height: "200px",
+        objectPosition: "bottom",
+        objectFit: "cover",
     }
 
 }))
@@ -123,8 +133,9 @@ const Tweet = () => {
                         This is the twitter content. 280 characters allowed This is the twitter content. 
                         280 characters allowed This is the twitter content. 280 characters allowed 
                         This is the twitter content. 280 characters allowed This is the twitter 
-                        content. 280 characters allowed This is the twitter 
+                        content. 280 characters allowed This is the twitter.
                         </p>
+                        <img src="https://cdna.artstation.com/p/assets/images/images/018/582/132/original/nisha-batham-panda-second.gif?1559906790&dl=1" alt="no-alt" className={classes.image_user_Tweet}/>
                     </div>
                     <div className={classes.tweetFooter}>
                         <ChatBubbleOutlineIcon fontSize="small" color="secondary"/>
