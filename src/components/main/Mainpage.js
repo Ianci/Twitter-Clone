@@ -2,16 +2,18 @@ import React from 'react';
 import TweetForm from './TweetForm'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from '@material-ui/core/styles';
+import Tweet from './Tweet'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        display: "grid",
-        gridTemplateColumns: "62% 38%",
+        display: "flex",
+        flex: 0.6,
         /* justify-content: space-between; */
-        maxWidth: "1000px",
-        width: "1000px",
+        maxWidth: "600px",
+        borderRight: "1px solid rgba(169, 170, 167, 0.40)",
         minWidth: "fit-content",
-        gridTemplateRows: "30% 30% 40%",
+        borderBottom: "1px solid grey",
+        flexDirection: "column",
         '&::-webkit-scrollbar': {
             display: "none",
         }
@@ -20,14 +22,13 @@ const useStyles = makeStyles((theme) => ({
         position: "sticky",
         overflowY: "scroll",
         display: "flex",
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
+        padding: "10px 12px",
+        top: "0%",
         justifyContent: "space-between",
         alignItems: "center",
         height: "50px",
         borderBottom: "1px solid rgba(169, 170, 167, 0.40)",
-        borderRight: "1px solid rgba(169, 170, 167, 0.40)",
-        zIndex: "100",
+        zIndex: "999",
         '&::-webkit-scrollbar': {
             display: "none",
         }
@@ -40,23 +41,17 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
     },
     TweetInput: {
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
-        position: "absolute",
-        marginTop: "3.1rem",
+        position: "relative",
         display: "flex",
-        width: "620px",
+        flex: 0.3,
         
     },
     feedSection: {
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
-        display: "flex",
-        top: "50%",
+        display: "block",
         width: "100%",
         borderTop: "8px solid grey",
         borderRight: "1px solid grey",
-        flexDirection: "column"
+        
     }
 }));
 const MainPage = () => {
@@ -70,21 +65,9 @@ const MainPage = () => {
             </div>
             <div className={classes.TweetInput}>
                     <TweetForm />
-                    
             </div>
             <div className={classes.feedSection}>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
-                    <h1>Feed here</h1>
+            <Tweet />
 
             </div>
             
