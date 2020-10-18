@@ -9,7 +9,7 @@ body {
   
   .app {
     display: flex;
-    max-width: 1400px;
+    min-width: 1400px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 10px;
