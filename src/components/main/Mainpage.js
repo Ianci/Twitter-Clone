@@ -68,11 +68,7 @@ const MainPage = () => {
             </div>
             <div className={classes.feedSection}>
             <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
-            <Tweet />
+            
             </div>
             
         </div>
