@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    fade,
+    makeStyles,
     withStyles,
     ThemeProvider,
     createMuiTheme
@@ -25,6 +25,14 @@ const theme = createMuiTheme({
     },
   });
 
+  const useStyles = makeStyles((theme) => ({
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        margin: theme.spacing(2)
+    }
+}));
+
 const StyledInputTwitter = withStyles((theme) => ({
     
     input: {
@@ -33,7 +41,7 @@ const StyledInputTwitter = withStyles((theme) => ({
       backgroundColor: "#243447",
       border: 'none',
       fontSize: 16,
-      width: 'auto',
+      width: '250px',
       color: "#fff",
       padding: '10px 12px',
       // Use the system font instead of the default Roboto font.
@@ -52,17 +60,36 @@ const StyledInputTwitter = withStyles((theme) => ({
       '&.Mui-focused': {
         borderColor: 'green',
       },
+      "&::placeholder": {
+        color: "#fff"
+      }
     },
   }))(InputBase);
 
 
 export const InputSearchTwitter = () => {
+  const classes = useStyles()
+  const [ change, setChange ] = useState({
+        input: ""
+    })
+    const handleChange = e => {
+        setChange({
+            ...change,
+            [e.target.name] : e.target.value
+        }) 
+    }
     return (
         <>
-        <ThemeProvider theme={theme}>
-        <StyledInputTwitter placeholder="Buscar en Twitter" id="twitter-input" />
+         <ThemeProvider theme={theme}>
+        <div className={classes.container}>
+        
+        <StyledInputTwitter placeholder="Buscar en Twitter" 
+         name="input" onChange={handleChange}
+         id="twitter-input" />
+        
+        </div>
         </ThemeProvider>
-        <p>Hola</p>
+        
         </>
     )
 }
