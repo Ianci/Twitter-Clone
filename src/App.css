@@ -10,9 +10,15 @@ body {
   .app {
     display: flex;
     min-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     padding: 0 10px;
     background-color: #141d29;
     min-height: 100vh;
+    
+  }
+  .container {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
   }
