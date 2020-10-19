@@ -64,7 +64,7 @@ const TweetForm = () => {
             <div className={classes.iconsContainer} >
                 {TweetIcons.map((icons, index)=>{
                     return(
-                        <ButtonBase centerRipple="true">
+                        <ButtonBase centerRipple>
                             <span>{icons.icon}</span>
                         </ButtonBase>
                     )
