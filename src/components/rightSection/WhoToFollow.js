@@ -7,16 +7,19 @@ export const whoToFollow = [
     {
         name: 'React',
         account: '@reactjs',
-        profilePic: ReactImg
+        profilePic: ReactImg,
+        href: 'https://twitter.com/reactjs'
     },
     {
         name: 'FirebaseES',
         account: '@FirebaseES',
-        profilePic: FirebaseImg
+        profilePic: FirebaseImg,
+        href:'https://twitter.com/FirebaseES'
     },
     {
         name: 'Material-UI',
         account: '@MaterialUI',
-        profilePic: MaterialUiImg
+        profilePic: MaterialUiImg,
+        href: 'https://twitter.com/MaterialUI'
     }
 ]
