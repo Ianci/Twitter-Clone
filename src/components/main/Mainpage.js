@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: "50px",
+        backgroundColor: '#111822',
         borderBottom: "1px solid rgba(169, 170, 167, 0.40)",
         zIndex: "999",
         '&::-webkit-scrollbar': {
