@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "600px",
         borderRight: "1px solid rgba(169, 170, 167, 0.40)",
         minWidth: "fit-content",
-        borderBottom: "1px solid grey",
         flexDirection: "column",
         '&::-webkit-scrollbar': {
             display: "none",
@@ -68,7 +67,8 @@ const MainPage = () => {
             </div>
             <div className={classes.feedSection}>
             <Tweet />
-            
+            <Tweet />
+            <Tweet />
             </div>
             
         </div>
