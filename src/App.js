@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   return (
     <div className="app">
+      <div className="container">
       <Router>
         <Switch>
           {["/", "/home", "/explorer", "/notifications", "/messages", "/bookmark", 
@@ -16,6 +17,7 @@ function App() {
           ))}
         </Switch>
       </Router>
+      </div>
     </div>
   );
 }

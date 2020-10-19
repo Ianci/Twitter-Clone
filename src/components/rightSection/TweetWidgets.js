@@ -1,7 +1,7 @@
 import React from 'react'
-import {InputSearchTwitter} from './InputForm'
+import InputSearchTwitter from './InputForm'
 import { makeStyles } from '@material-ui/core/styles';
-import TweetWidget from './TweetWidget'
+import {TweetWidget} from './InputForm'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -19,7 +19,7 @@ const TweetWindgets = () => {
         <>
         <div className={classes.container}>
             <InputSearchTwitter />
-            <TweetWidget />
+            
         </div>
         
         </>

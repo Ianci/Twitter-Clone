@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     makeStyles,
     withStyles,
@@ -7,6 +7,8 @@ import {
   } from '@material-ui/core/styles';
 
 import InputBase from '@material-ui/core/InputBase';
+import { Timeline } from 'react-twitter-widgets'
+
 
 const theme = createMuiTheme({
     palette: {
@@ -29,7 +31,11 @@ const theme = createMuiTheme({
     container: {
         display: "flex",
         flexDirection: "column",
-        margin: theme.spacing(2)
+        margin: "10px 17px",
+        marginTop: "5px"
+    },
+    containerTimeLine: {
+      marginTop: theme.spacing(2)
     }
 }));
 
@@ -67,29 +73,31 @@ const StyledInputTwitter = withStyles((theme) => ({
   }))(InputBase);
 
 
-export const InputSearchTwitter = () => {
+const InputSearchTwitter = () => {
+
   const classes = useStyles()
-  const [ change, setChange ] = useState({
-        input: ""
-    })
-    const handleChange = e => {
-        setChange({
-            ...change,
-            [e.target.name] : e.target.value
-        }) 
-    }
-    return (
-        <>
+  const [ change, setChange ] = useState("reactjs")
+    
+  
+  return ( 
+    <>
          <ThemeProvider theme={theme}>
         <div className={classes.container}>
         
         <StyledInputTwitter placeholder="Buscar en Twitter" 
-         name="input" onChange={handleChange}
-         id="twitter-input" />
-        
+         name="input" onChange={e => setChange(e.target.value)}
+         id="twitter-input"/>
+          <div className={classes.containerTimeLine}>
+         <Timeline
+          dataSource={{ sourceType: "profile", screenName: `${change}` }}
+          options={{ theme: "dark", width: "300", height: "600", margin: "20px" }}
+        />
+        </div>
         </div>
         </ThemeProvider>
         
         </>
-    )
+   );
 }
+ 
+export default InputSearchTwitter;
