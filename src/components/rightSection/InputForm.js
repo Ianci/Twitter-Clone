@@ -125,7 +125,8 @@ const InputSearchTwitter = () => {
 
   const classes = useStyles()
   const [ change, setChange ] = useState("reactjs")
- 
+  
+  //Si el usuario borra la búsqueda, vuelve al defaultValue de 'reactjs'
   const handleChange = e => {
     if(e.target.value === ''){
       setChange("reactjs")
@@ -133,7 +134,6 @@ const InputSearchTwitter = () => {
   }
 
   useEffect(() => {
-    
   }, [change])
 
   
@@ -144,7 +144,7 @@ const InputSearchTwitter = () => {
          <ThemeProvider theme={theme}>
         <div className={classes.container}>
         
-        <StyledInputTwitter placeholder="Buscar en Twitter" 
+        <StyledInputTwitter placeholder="Busca una cuenta de Twitter" 
          name="input" 
          onChange={e => setChange(e.target.value)}
          onBlur={handleChange}
