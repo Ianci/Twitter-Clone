@@ -130,10 +130,7 @@ const Tweet = () => {
                     
                     <div className={classes.tweetBody}>
                         <p className={classes.tweetText}>
-                        This is the twitter content. 280 characters allowed This is the twitter content. 
-                        280 characters allowed This is the twitter content. 280 characters allowed 
-                        This is the twitter content. 280 characters allowed This is the twitter 
-                        content. 280 characters allowed This is the twitter.
+                        Bienvenido/a a mi clon de Twitter !!!
                         </p>
                         <img src="https://cdna.artstation.com/p/assets/images/images/018/582/132/original/nisha-batham-panda-second.gif?1559906790&dl=1" alt="no-alt" className={classes.image_user_Tweet}/>
                     </div>
