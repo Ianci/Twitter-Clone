@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     inicio: {
         paddingLeft: theme.spacing(1),
         fontWeight: "bold",
+        cursor: 'pointer',
         color: "rgb(255, 255, 255)",
         fontSize: "1.2rem",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
@@ -56,11 +57,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 const MainPage = () => {
     const classes = useStyles()
+
+    function scrollToTop(){
+        document.documentElement.scrollTop = 0
+        
+    }
     return ( 
         <div className={classes.container}>
             
             <div className={classes.mainSection}>
-                <span className={classes.inicio}>Inicio</span>
+                <span className={classes.inicio} onClick={scrollToTop}>Inicio</span>
                 <StarBorderIcon style={{color: "#4682B4"}}/>
             </div>
             <div className={classes.TweetInput}>
@@ -68,8 +74,6 @@ const MainPage = () => {
             </div>
             <div className={classes.feedSection}>
             <Tweet />
-            <Tweet />
-            
             </div>
             
         </div>
