@@ -22,16 +22,17 @@ function App() {
       
       <Router>
         <Switch>
-          {["/home", "/explorer", "/notifications", "/messages", "/bookmark", 
+        
+            <Route path='/register' component={Register} />
+            <Route exact path='/' component={Home} />
+            <Route path='/login' component={Login} />
+            {["/home", "/explorer", "/notifications", "/messages", "/bookmark", 
           "/lists", "/profile", "/options"].map(path =>(
             <Route key={path}
             path={path} 
             component={Home} />
             
           ))}
-            <Route path='/register' component={Register} />
-            <Route path='/' component={Home} />
-            <Route path='/Login' component={Login} />
         </Switch>
       </Router>
       </div>
