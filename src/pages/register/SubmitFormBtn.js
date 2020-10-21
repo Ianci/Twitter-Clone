@@ -55,7 +55,7 @@ const SubmitFormButton = (props) => {
         <StyledButton className={classes.margin}
         type="submit"
         {...props}>
-            Crea tu cuenta ahora!
+            {props.children}
         </StyledButton>
     )
 }
