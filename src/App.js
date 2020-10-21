@@ -19,7 +19,7 @@ function App() {
       <div className="container">
       <Router>
         <Switch>
-          {["/", "/home", "/explorer", "/notifications", "/messages", "/bookmark", 
+          {["/home", "/explorer", "/notifications", "/messages", "/bookmark", 
           "/lists", "/profile", "/options"].map(path =>(
             <Route key={path}
             path={path} 
@@ -27,7 +27,7 @@ function App() {
             
           ))}
             <Route path='/register' component={Register} />
-
+            <Route path='/' component={Home} />
             <Route path='/Login' component={Login} />
         </Switch>
       </Router>

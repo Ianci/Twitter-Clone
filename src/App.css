@@ -9,15 +9,14 @@ body {
   
   .app {
     display: flex;
-    min-width: 1400px;
+    min-width: 1200px;
     margin: 0 auto;
-    padding: 0 10px;
     background-color: #141d29;
     min-height: 100vh;
     
   }
   .container {
-    max-width: 1400px;
+    max-width: 1200px;
     width: 100%;
     display: flex;
     margin: 0 auto;
