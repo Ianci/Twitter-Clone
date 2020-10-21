@@ -5,10 +5,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Register from './pages/register/Register'
 import Login from './pages/login/Login'
 
+
 //Firebase
 import firebase, { FirebaseContext } from './firebase'
 
+
 function App() {
+  
   return (
 
     <FirebaseContext.Provider 
@@ -16,7 +19,7 @@ function App() {
     >
 
     <div className="app">
-      <div className="container">
+      
       <Router>
         <Switch>
           {["/home", "/explorer", "/notifications", "/messages", "/bookmark", 
@@ -32,7 +35,7 @@ function App() {
         </Switch>
       </Router>
       </div>
-    </div>
+   
     </FirebaseContext.Provider>
   );
 }
