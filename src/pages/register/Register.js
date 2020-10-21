@@ -87,8 +87,10 @@ const Register = () => {
                 
                
                 <SubmitFormButton 
+                onClick={test}>
+                    Crea su cuenta ahora!
+                </SubmitFormButton>
                 
-                onClick={test}/>
             </div>
         </div>
         </>
