@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme =>({
       ? '45px'
       : '30px',
 
-      
       padding: '0 50px',
       '&:hover': {
         backgroundColor: "rgb(26, 145, 218)",
@@ -35,12 +34,13 @@ const useStyles = makeStyles(theme =>({
     },
   }));
 
-function MyButton(props){
-  const { size , onClick , ...other} = props
+
+  function MyButton(props){
+  const { size , ...other} = props
   const classes = useStyles(props);
   return ( 
             <Button 
-            onClick={onClick ? onClick : () => {}}
+            
             variant="contained"
             classes={{
             root: classes.root,
@@ -54,17 +54,19 @@ MyButton.propTypes = {
   size: PropTypes.oneOf(['medium', 'small']).isRequired,
 }
 
-export const MediumTweetButton = () => {
+export const MediumTweetButton = (props) => {
     return ( 
-        <MyButton size="medium">
+        <MyButton size="medium"
+        {...props}>
          Twittear
         </MyButton>
      );
 }
 
-export const SmallTweetButton = () => {
+export const SmallTweetButton = (props) => {
   return (
-    <MyButton size ="small">
+    <MyButton size ="small"
+    {...props}>
       Twittear
     </MyButton>
   )

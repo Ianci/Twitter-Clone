@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) =>({
 }))
 const TweetForm = () => {
     const classes = useStyles()
+
     function clicked (){
         console.log('The button work')
     }
@@ -69,8 +70,9 @@ const TweetForm = () => {
                         </ButtonBase>
                     )
                 })}
-                <div className={classes.sendTweet} onClick={clicked}>
-                 <SmallTweetButton />
+                <div className={classes.sendTweet} >
+                 <SmallTweetButton onClick={clicked}
+                 type="submit"/>
                 </div>
             </div>
         </div>
