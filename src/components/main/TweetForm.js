@@ -6,7 +6,8 @@ import TextareaAutosize from 'react-autosize-textarea';
 import { ButtonBase } from '@material-ui/core';
 import { TweetIcons } from './TweetIcons'
 import { SmallTweetButton } from '../sidebar/ButtonSideBar'
-
+import { Formik, Form, ErrorMessage, Field} from 'formik'
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -42,41 +43,80 @@ const useStyles = makeStyles((theme) =>({
     },
     avatarTweet: {
         height: "fit-content"
+    },
+    errorMsg: {
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
+        color: "red",
+        fontWeight: 600,
+        lineHeight: 1,
+        fontSize: "1rem",
+        padding: "4px"
+
     }
 }))
 const TweetForm = () => {
     const classes = useStyles()
 
-    function clicked (){
-        console.log('The button work')
-    }
+
     //TextArea Fn to resizing height
 
     return ( 
-        <>
-        <div className={classes.avatarTweet}>
-            <Avatar src={Img2} alt="account-profile" className={classes.root}/>
-        </div>
-        <div className={classes.tweetBody}>
+        <Formik initialValues={{inputTweet: ""}}
+        validationSchema={Yup.object({
+            inputTweet: Yup.string()
+            .min(1)
+            .max(280, '280 caracteres máximos permitidos')
+        })}
+        
+        onSubmit={(values, {setSubmitting}) => {
+            setTimeout(() => {
 
-            <div className={classes.tweetTextArea}>
-                <TextareaAutosize maxRows={4}  className={classes.inputTweet} placeholder="¿Qué está pasando?" />
+                console.log(JSON.stringify( values, null, 2));
+ 
+                setSubmitting(false);
+            }, 400);
+        }}>
+            {( {isValid, dirty })=> (
+            <>
+            
+            <div className={classes.avatarTweet}>
+                <Avatar src={Img2} alt="account-profile" className={classes.root}/>
             </div>
-            <div className={classes.iconsContainer} >
-                {TweetIcons.map((icons, index)=>{
-                    return(
-                        <ButtonBase centerRipple>
-                            <span>{icons.icon}</span>
-                        </ButtonBase>
-                    )
-                })}
-                <div className={classes.sendTweet} >
-                 <SmallTweetButton onClick={clicked}
-                 type="submit"/>
+            <Form>
+            <div className={classes.tweetBody}>
+                <div className={classes.tweetTextArea}>
+                    <Field as={TextareaAutosize} name="inputTweet" maxRows={4} className={classes.inputTweet} placeholder="¿Qué está pasando?" />
+                    
                 </div>
+                <div className={classes.iconsContainer} >
+                    
+                    {TweetIcons.map((icons, index)=>{
+                        return(
+                            <ButtonBase 
+                            key={index}
+                            centerRipple>
+                                <span>{icons.icon}</span>
+                            </ButtonBase>
+                        )
+                    })}
+
+                    
+                
+                <div className={classes.sendTweet} >
+                    <SmallTweetButton disabled={!(isValid & dirty)}
+                    type="submit"/>
+                </div>
+                <ErrorMessage name="inputTweet" component="h3" className={classes.errorMsg} />
+                </div>
+
             </div>
-        </div>
-        </>
+            </Form>
+            </>
+            )}
+        
+        
+        </Formik>
+        
      );
 }
  

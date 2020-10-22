@@ -39,6 +39,14 @@ const useStyles = makeStyles((theme)=>({
         fontWeight: 800,
         lineHeight: 1.3125,
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
+    },
+    errorMessage: {
+        color: 'red',
+        fontWeight: 500,
+        lineHeight: 1.225,
+        fontSize: '1rem',
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
+        padding: '4px'
     }
 }))
 
@@ -46,54 +54,86 @@ const useStyles = makeStyles((theme)=>({
 const Register = () => {
     const classes = useStyles()
 
-    function test(){
-        console.log('it works')
-    }
+  
     return ( 
-        <>
-        <div className={classes.registerContainer}>
-            <div className={classes.ImageLeft}>
-                <img src={TweetRegister} alt="twitter-left-img" />
-            </div>
-            <div className={classes.containerForm}>
-                <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
-                <h1 className={classes.twitterh1}>Crea su cuenta de Twitter ahora</h1>
-                <TextField  className={classes.InputForm} label="Nombre" variant="outlined" color="secondary"/>
-                <TextField  className={classes.InputForm} label="Email" variant="outlined" color="secondary"/>
-                <TimePicker />
+        
+        <Formik initialValues={{ name:  "", date: "2020-03-02", email: "", password: "", confirm: ""}}
+        validationSchema= {Yup.object({
+            name: Yup.string()
+            .required('Por favor introduce tu nombre')
+            .max(15, 'Tu nombre debe contener 15 caracteres máximo'),
+            email: Yup.string()
+            .email('Introduce un email válido')
+            .required('Completa el campo con tu email'),
+            date: Yup.date()
+            .required('Introduce tu fecha de nacimiento'),
+            password: Yup.string()
+            .required('Introduce tu contraseña')
+            .min(8, 'La contraseña debe tener al menos 8 caracteres')
+            .max(15, 'La contraseña debe tener como máximo 15 caracteres'),
+            confirm: Yup.string()
+            .required('Vuelva a escribir la contraseña')
+            .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden')
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+                console.log(JSON.stringify( values, null, 2));
+                setSubmitting(false);
+            }, 1000);
+        }}
+        >
+            {( { isValid, dirty }) =>(
 
-                <label htmlFor="upload-photo">
-                <input
-                    style={{ display: 'none' }}
-                    id="upload-photo"
-                    name="upload-photo"
-                    type="file"
-                />
+            <div className={classes.registerContainer}>
+                    <div className={classes.ImageLeft}>
+                        <img src={TweetRegister} alt="twitter-left-img" />
+                    </div>
+                    <div className={classes.containerForm}>
+                    <Form style={{display: "flex", flexDirection: "column"}}>
+                        <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
+                        <h1 className={classes.twitterh1}>Crea su cuenta de Twitter ahora</h1>
+                        <Field as={TextField} type="text" className={classes.InputForm} name="name" label="Nombre" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="name" component="small" className={classes.errorMessage} />
+                        <Field as={TextField}  type="email"  className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="email" component="small" className={classes.errorMessage} />
+                        <TimePicker />
 
-                <Fab
-                    color="secondary"
-                    size="small"
-                    component="span"
-                    aria-label="add"
-                    variant="extended"
-                    style={{margin: '12px'}}
-                >
-                    <AddIcon /> Añada su foto de perfil
-                </Fab>
-                </label>
+                        <label htmlFor="upload-photo">
+                        <input
+                            style={{ display: 'none' }}
+                            id="upload-photo"
+                            name="upload-photo"
+                            type="file"
+                        />
 
-                <TextField  className={classes.InputForm} label="Contraseña" variant="outlined" color="secondary"/>
-                <TextField  className={classes.InputForm} label="Repite tu contraseña" variant="outlined" color="secondary"/>
-                
-               
-                <SubmitFormButton 
-                onClick={test}>
-                    Crea su cuenta ahora!
-                </SubmitFormButton>
-                
-            </div>
-        </div>
-        </>
+                        <Fab
+                            color="secondary"
+                            size="small"
+                            component="span"
+                            aria-label="add"
+                            variant="extended"
+                            style={{margin: '12px'}}
+                        >
+                            <AddIcon /> Añada su foto de perfil
+                        </Fab>
+                        </label>
+
+                        <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="name" component="small" className={classes.errorMessage} />
+                        <Field as={TextField} type="password" className={classes.InputForm} name="confirm" label="Repite tu contraseña" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="confirm" component="small" className={classes.errorMessage} />
+                    
+                        <SubmitFormButton 
+                        disabled={!(isValid && dirty)}
+                        >
+                            Crea su cuenta ahora!
+                        </SubmitFormButton>
+                        </Form>
+                    </div>
+            </div>   
+            )}
+        
+        </Formik>
      );
 }
  

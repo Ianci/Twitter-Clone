@@ -3,7 +3,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
 export default function TimePicker() {
-    const [selectedDate, setSelectedDate] = useState(new Date ('2020-09-04'))
+    const [selectedDate, setSelectedDate] = useState(new Date ('10-22-2020'))
 
     const handleDateChange = date => {
         setSelectedDate(date)
@@ -17,6 +17,10 @@ export default function TimePicker() {
             format="MM/dd/yyyy"
             value={selectedDate}
             onChange={handleDateChange}
+            name="date"
+            KeyboardButtonProps={{
+                'aria-label': 'change date',
+            }}
             />
         </MuiPickersUtilsProvider>
     )

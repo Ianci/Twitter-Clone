@@ -74,13 +74,13 @@ const Login = () => {
                console.log(JSON.stringify( values, null, 2));
 
                setSubmitting(false);
-           }, 500);
+           }, 1000);
         }}>
         {( {isValid, dirty})=>(
             //HTML
             <div className={classes.registerContainer}>
                 
-                <div className={classes.ImageLeft}>
+                  <div className={classes.ImageLeft}>
                     <img src={TweetLogin} alt="twitter-left-img" className={classes.leftImage}/>
                 </div>
                 
@@ -91,10 +91,10 @@ const Login = () => {
                     <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
                     <h1 className={classes.twitterh1}>Ingrese a su cuenta</h1>
                     
-                    <Field as={TextField} className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
+                    <Field as={TextField} type="text" className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
                     <ErrorMessage name="email" component="small" className={classes.errorMessage}/>
                     
-                    <Field as={TextField}  className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
+                    <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
                     <ErrorMessage name="password" component="small" className={classes.errorMessage}/>
                     
                     <SubmitFormButton 
