@@ -75,7 +75,7 @@ const Register = () => {
     const history = useHistory()
     const [ error, setError ] = useState(false)
     const [ errorMsg, setErrorMsg] = useState('')
-    const [ isSubmitting, setIsSubmitting] = useState(false)
+    
 
     
         //Register Function
@@ -83,7 +83,7 @@ const Register = () => {
             try {
                 await firebase.accountRegistration(values.name, values.email, values.password, values.name)
                
-                setIsSubmitting(true)
+                
                 setError(false)
                 setTimeout(() => {
                     history.push('/user-dates')
@@ -93,7 +93,7 @@ const Register = () => {
                
                 console.error('Se ha producido un error', error.message)
                 setError(true)
-                setIsSubmitting(false)
+                
                 setErrorMsg(error.message)
             }
             

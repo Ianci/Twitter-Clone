@@ -113,7 +113,6 @@ const Register = () => {
             history.push('/home')
             }, 3000);
         }
-        
     }
     
    
