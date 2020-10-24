@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext  } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import  SidebarAvatar  from './SidebarAvatar'
-
-
+import { FirebaseContext } from '../../firebase'
+import { useHistory } from 'react-router-dom'
 
 const SidebarAccount = () => {
-    
+    const { firebase, user } = useContext(FirebaseContext)
+    console.log(user)
+    const history = useHistory()
+
+    async function userLogOut () {
+      await firebase.logOut()
+      handleClose()
+      history.push("/register")
+    }
+
     //Menu state
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -37,7 +46,7 @@ const SidebarAccount = () => {
             <SidebarAvatar />
         </MenuItem>
         <MenuItem onClick={handleClose}>Agregar una cuenta existente</MenuItem>
-        <MenuItem onClick={handleClose}>Cerrar la sesión de @ianbrg11</MenuItem>
+        <MenuItem onClick={userLogOut}>Cerrar la sesión de @ianbrg11</MenuItem>
         </Menu>
         </>
      );
