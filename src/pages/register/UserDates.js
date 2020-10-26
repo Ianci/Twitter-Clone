@@ -78,10 +78,13 @@ const Register = () => {
     const [ error, setError ] = useState(false)
     const [ errorMsg, setErrorMsg] = useState('')
     const [ isSubmitting, setIsSubmitting] = useState(false)
+   
     //TimePicker State
     const [selectedDate, setSelectedDate] = useState(new Date ('1-1-2000'))
+
     //Context
     const { user } = useContext(FirebaseContext)
+
     //FileUploader states
     const [ imageName, setImageName] = useState('')
     const [ progress, setProgress ] = useState(0)
@@ -96,7 +99,7 @@ const Register = () => {
     //User information:
     async function userInformation (values){
         if(!user){
-            history.push('/welcome')
+            history.push('/')
         }
         const userInfo = {
             name: user.displayName,
@@ -108,11 +111,12 @@ const Register = () => {
             
         }
         if(userInfo.avatar !== undefined){
-            firebase.db.collection('users').add(userInfo)
+            firebase.db.collection('users').doc(user.uid).set(userInfo)
             setTimeout(() => {
             history.push('/home')
             }, 3000);
         }
+      
     }
     
    
