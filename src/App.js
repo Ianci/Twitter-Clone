@@ -12,6 +12,7 @@ import firebase, { FirebaseContext } from './firebase'
 
 
 function App() {
+  
   const user = useAuth()
   
   return (

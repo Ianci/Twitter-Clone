@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Img2 from '../../images/img2.jpeg'
 import TextareaAutosize from 'react-autosize-textarea';
 import { ButtonBase } from '@material-ui/core';
-import { TweetIcons } from './TweetIcons'
-import { SmallTweetButton } from '../sidebar/ButtonSideBar'
-import { Formik, Form, ErrorMessage, Field} from 'formik'
+import { TweetIcons } from './TweetIcons';
+import { formatDistance } from 'date-fns'
+import { SmallTweetButton } from '../sidebar/ButtonSideBar';
+import { Formik, Form, ErrorMessage, Field} from 'formik';
+import { FirebaseContext } from '../../firebase';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) =>({
@@ -56,9 +59,63 @@ const useStyles = makeStyles((theme) =>({
 }))
 const TweetForm = () => {
     const classes = useStyles()
+    const { user, firebase } = useContext(FirebaseContext) 
+    const history = useHistory()
+    const [ userInformation, setUserInformation ] = useState([])
+   
+    let username;
+    let name;
+    if(userInformation.length !== 0){
+        userInformation.map((data)=>{
+            username = data.username
+            name = data.name
+        })
+        console.log(username)
+    }
+    
 
+    useEffect(() => {
+        const getUserInfo = () =>{
+            if(user){
+                firebase.db.collection('users').where('id', '==', user.uid)
+                .onSnapshot(getInfo)
+            }
+            
+        }
+        getUserInfo()
+    }, [])
+    
+    function getInfo(snapshot){
+        const info = snapshot.docs.map(docc => {
+            return {
+                id: docc.id,
+                ...docc.data()
+            }
+        });
+        setUserInformation(info)
+    }
+    
+    async function createTweet(values){
+        if(!user){
+            history.push('/')
+        }
+        if(userInformation !== undefined){
+            
+            const tweet = {
+                id: user.uid,
+                name: name ,
+                username: username,
+                favs: 0,
+                tweetContent: values.inputTweet,
+                date: Date.now()
+        }
+        firebase.db.collection('tweets').doc(user.uid).set(tweet)
+    }
 
-    //TextArea Fn to resizing height
+        
+    }
+  
+
 
     return ( 
         <Formik initialValues={{inputTweet: ""}}
@@ -68,13 +125,14 @@ const TweetForm = () => {
             .max(280, '280 caracteres máximos permitidos')
         })}
         
-        onSubmit={(values, {setSubmitting}) => {
-            setTimeout(() => {
-
-                console.log(JSON.stringify( values, null, 2));
- 
+        onSubmit={(values, {setSubmitting, resetForm}) => {
+            
+                setSubmitting(true)
+                console.log(values)
+                createTweet(values)
+                resetForm()
                 setSubmitting(false);
-            }, 400);
+            
         }}>
             {( {isValid, dirty })=> (
             <>

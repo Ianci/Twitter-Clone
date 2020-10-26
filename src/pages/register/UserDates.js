@@ -2,8 +2,8 @@ import React, { useState, useContext  } from 'react';
 import { makeStyles} from '@material-ui/core/styles';
 import { Formik, Form, ErrorMessage, Field} from 'formik'
 import * as Yup from 'yup';
-import firebase, { FirebaseContext } from '../../firebase'
-import  TimePicker  from './TimePicker'
+import { FirebaseContext } from '../../firebase'
+
 import { TextField, Fab, Button } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -83,7 +83,7 @@ const Register = () => {
     const [selectedDate, setSelectedDate] = useState(new Date ('1-1-2000'))
 
     //Context
-    const { user } = useContext(FirebaseContext)
+    const { user, firebase } = useContext(FirebaseContext)
 
     //FileUploader states
     const [ imageName, setImageName] = useState('')
