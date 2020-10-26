@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar'
 import Mainpage from '../../components/main/Mainpage'
 import TweetWidgets from '../../components/rightSection/TweetWidgets'
-import { theme } from '../../components/MaterialUiTheme/MenuOverride'
-import { ThemeProvider} from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
+import { FirebaseContext } from '../../firebase'
+
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme)=>({
@@ -17,15 +18,31 @@ const useStyles = makeStyles((theme)=>({
 }))
 const Home = () => {
     const classes = useStyles()
+    const { user } = useContext(FirebaseContext)
+    const history = useHistory()
+
+    console.log(user)
+
+    //Security. Si no hay usuario logueado, push to welcome page
+    useEffect(() => {
+        if(!user){
+            history.push('/')
+        }
+    }, [])
+
     return ( 
         <>
-        <ThemeProvider theme={theme}>
+        
+
         <div className={classes.container}>
+
         <Sidebar />
         <Mainpage />
         <TweetWidgets />
+
         </div>
-        </ThemeProvider>
+
+        
         </>
      );
 }

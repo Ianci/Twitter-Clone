@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme)=>({
     containerForm: {
         margin: "0 auto",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
     },
     InputForm: {
         marginBottom: theme.spacing(2)
@@ -43,7 +45,9 @@ const useStyles = makeStyles((theme)=>({
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif"
     },
     leftImage: {
-        maxWidth: "-webkit-fill-available"
+        maxWidth: "-webkit-fill-available",
+        display: "flex",
+        width: "500px"
     },
     errorMessage: {
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
@@ -63,6 +67,14 @@ const useStyles = makeStyles((theme)=>({
         textAlign: 'center',
         padding: "0 100px",
         display: "flex",    
+    },
+    ImageLeft: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end"
+    },
+    container: {
+        display: "contents"
     }
 }))
 
@@ -80,7 +92,7 @@ const Login = () => {
             setIsSubmitting(true)
             setError(false)
             setTimeout(() => {
-                history.push('/')  
+                history.push('/home')  
             }, 3000);
         } catch (error) {
             console.log(error)
@@ -109,33 +121,37 @@ const Login = () => {
         {( {isValid, dirty})=>(
             //HTML
             <div className={classes.registerContainer}>
+
+                <div className={classes.container}>
+
+                    <div className={classes.ImageLeft}>
+                        <img src={TweetLogin} alt="twitter-left-img" className={classes.leftImage}/>
+                    </div>
                 
-                  <div className={classes.ImageLeft}>
-                    <img src={TweetLogin} alt="twitter-left-img" className={classes.leftImage}/>
-                </div>
                 
-                
-                <div className={classes.containerForm}>
-                    { isSubmitting ? <h1 className={classes.thanksText}>Iniciando sesion...</h1>
-                    :
-                    <Form style={{display: "flex", flexDirection: "column"}}>
-                    
-                    <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
-                    <h1 className={classes.twitterh1}>Ingrese a su cuenta</h1>
-                    
-                    <Field as={TextField} type="text" className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
-                    <ErrorMessage name="email" component="small" className={classes.errorMessage}/>
-                    
-                    <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
-                    <ErrorMessage name="password" component="small" className={classes.errorMessage}/>
-                    
-                    <SubmitFormButton 
-                    disabled={!(isValid && dirty)}>
-                        Ingrese ahora!
-                    </SubmitFormButton>
-                    </Form>
-                    }
-                    { error && <p className={classes.errorMessage}>{error}</p>}
+                    <div className={classes.containerForm}>
+                        { isSubmitting ? <h1 className={classes.thanksText}>Iniciando sesion...</h1>
+                        :
+                        <Form style={{display: "flex", flexDirection: "column"}}>
+                        
+                        <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
+                        <h1 className={classes.twitterh1}>Ingrese a su cuenta</h1>
+                        
+                        <Field as={TextField} type="text" className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="email" component="small" className={classes.errorMessage}/>
+                        
+                        <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
+                        <ErrorMessage name="password" component="small" className={classes.errorMessage}/>
+                        
+                        <SubmitFormButton 
+                        disabled={!(isValid && dirty)}>
+                            Ingrese ahora!
+                        </SubmitFormButton>
+                        </Form>
+                        }
+                        { error && <p className={classes.errorMessage}>{error}</p>}
+                    </div>
+
                 </div>
             </div>
             

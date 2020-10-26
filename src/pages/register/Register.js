@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme)=>({
         padding: "0 100px",
         display: "flex",
        
+    },
+    container: {
+        maxWidth: "1200px"
     }
     
 }))
@@ -131,40 +134,42 @@ const Register = () => {
             {( {isValid, dirty}) =>(
             
             <div className={classes.registerContainer}>
+                
                     <div className={classes.ImageLeft}>
                         <img src={TweetRegister} alt="twitter-left-img" />
                     </div>
-                    <div className={classes.containerForm}>
-                    
-                   
-                    <Form style={{display: "flex", flexDirection: "column"}}>
-                        <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
-                        <h1 className={classes.twitterh1}>Crea su cuenta de Twitter ahora</h1>
+                        <div className={classes.containerForm}>
                         
-                        <Field as={TextField} type="text" name="name" className={classes.InputForm} label="Tu nombre u apodo" variant="outlined" color="secondary" />
-                        <ErrorMessage name="name" component="small" className={classes.errorMessage} />
-
-                        <Field as={TextField}  type="email"  className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
-                        <ErrorMessage name="email" component="small" className={classes.errorMessage} />
                     
+                            <Form style={{display: "flex", flexDirection: "column"}}>
+                                <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
+                                <h1 className={classes.twitterh1}>Crea su cuenta de Twitter ahora</h1>
+                                
+                                <Field as={TextField} type="text" name="name" className={classes.InputForm} label="Tu nombre u apodo" variant="outlined" color="secondary" />
+                                <ErrorMessage name="name" component="small" className={classes.errorMessage} />
 
-                        <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
-                        <ErrorMessage name="password" component="small" className={classes.errorMessage} />
+                                <Field as={TextField}  type="email"  className={classes.InputForm} name="email" label="Email" variant="outlined" color="secondary"/>
+                                <ErrorMessage name="email" component="small" className={classes.errorMessage} />
+                            
 
-                        <Field as={TextField} type="password" className={classes.InputForm} name="confirm" label="Repite tu contraseña" variant="outlined" color="secondary"/>
-                        <ErrorMessage name="confirm" component="small" className={classes.errorMessage} />
-                    
-                        <SubmitFormButton 
-                        type="submit"
-                        disabled={!(isValid && dirty)}
-                        >
-                            Crea su cuenta ahora!
-                        </SubmitFormButton>
-                        </Form>
+                                <Field as={TextField} type="password" className={classes.InputForm} name="password" label="Contraseña" variant="outlined" color="secondary"/>
+                                <ErrorMessage name="password" component="small" className={classes.errorMessage} />
+
+                                <Field as={TextField} type="password" className={classes.InputForm} name="confirm" label="Repite tu contraseña" variant="outlined" color="secondary"/>
+                                <ErrorMessage name="confirm" component="small" className={classes.errorMessage} />
+                            
+                                <SubmitFormButton 
+                                type="submit"
+                                disabled={!(isValid && dirty)}
+                                >
+                                    Crea su cuenta ahora!
+                                </SubmitFormButton>
+                                </Form>
+                                
+                                
+                                { error && <p className={classes.errorMessage}> {errorMsg} </p>}
+                            </div>
                         
-                        
-                        { error && <p className={classes.errorMessage}> {errorMsg} </p>}
-                        </div>
                     </div> 
             )}
             
