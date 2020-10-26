@@ -63,6 +63,10 @@ const TweetForm = () => {
     const history = useHistory()
     const [ userInformation, setUserInformation ] = useState([])
    
+
+    //Acá se va a guardar en el state la información del usuario, y luego la vamos a usar para
+    //rellenar los datos del tweet y lo vamos a almacenar en la BD de Firebase
+
     let username;
     let name;
     if(userInformation.length !== 0){
@@ -70,10 +74,9 @@ const TweetForm = () => {
             username = data.username
             name = data.name
         })
-        console.log(username)
+        
     }
-    
-
+    //Nos traemos los datos del usuario
     useEffect(() => {
         const getUserInfo = () =>{
             if(user){
@@ -84,7 +87,8 @@ const TweetForm = () => {
         }
         getUserInfo()
     }, [])
-    
+
+    //Callback function de firebase y guardamos la respuesta en setUserInformation
     function getInfo(snapshot){
         const info = snapshot.docs.map(docc => {
             return {
@@ -95,6 +99,7 @@ const TweetForm = () => {
         setUserInformation(info)
     }
     
+    //Funcion para crear tweets
     async function createTweet(values){
         if(!user){
             history.push('/')
