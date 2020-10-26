@@ -8,13 +8,13 @@ import { useHistory } from 'react-router-dom'
 
 const SidebarAccount = () => {
     const { firebase, user } = useContext(FirebaseContext)
-    console.log(user)
+    
     const history = useHistory()
 
     async function userLogOut () {
       await firebase.logOut()
       handleClose()
-      history.push("/register")
+      history.push("/")
     }
 
     //Menu state
