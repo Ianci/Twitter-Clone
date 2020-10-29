@@ -20,14 +20,17 @@ const SidebarAvatar = () => {
 
     //Evitar que throwee error al cargar por primera vez. User arranca null
     
-    if (!user) return null
+    if(!user) return null;
+
     return ( 
         <>
-        <Avatar src={user.photoURL} alt="account-profile" className={classes.root}/>
+        
+        <Avatar src="" alt="account-profile" className={classes.root}/>
         <div className="account-name">
-            <p className="p-name">{user.displayName}</p>
-            <span className="s-account">@ianbrg11</span>
+            <p className="p-name">hola</p>
+            <span className="s-account">{user.displayName}</span>
         </div>
+        
         </>
      );
 }

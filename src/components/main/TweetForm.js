@@ -62,26 +62,31 @@ const TweetForm = () => {
     const { user, firebase } = useContext(FirebaseContext) 
     const history = useHistory()
     const [ userInformation, setUserInformation ] = useState([])
-   
-
+   const  [ tweetInformation, setTweetInformation] = useState([])
+    
     //Acá se va a guardar en el state la información del usuario, y luego la vamos a usar para
     //rellenar los datos del tweet y lo vamos a almacenar en la BD de Firebase
-
+   
+    let avatarTweet;
     let username;
     let name;
     if(userInformation.length !== 0){
         userInformation.map((data)=>{
             username = data.username
             name = data.name
+            avatarTweet = data.avatar
+            
         })
         
     }
-    //Nos traemos los datos del usuario
+    //Nos traemos tanto los datos del user como sus tweets
     useEffect(() => {
         const getUserInfo = () =>{
             if(user){
                 firebase.db.collection('users').where('id', '==', user.uid)
                 .onSnapshot(getInfo)
+                firebase.db.collection('tweets').where('id', '==', user.uid)
+                .onSnapshot(getUserTweets)
             }
             
         }
@@ -98,6 +103,15 @@ const TweetForm = () => {
         });
         setUserInformation(info)
     }
+    //Callback function para guardar los tweets en el usuario correspondiente y guardamos la respuesta en setTweetInformation
+    function getUserTweets(snapshot){
+        const information = snapshot.docs.map(doc =>{
+            return {
+                ...doc.data()
+            }
+        }) 
+        setTweetInformation(information)
+    }
     
     //Funcion para crear tweets
     async function createTweet(values){
@@ -107,6 +121,7 @@ const TweetForm = () => {
         if(userInformation !== undefined){
             
             const tweet = {
+                avatarTweet: avatarTweet,
                 id: user.uid,
                 name: name ,
                 username: username,
@@ -114,14 +129,13 @@ const TweetForm = () => {
                 tweetContent: values.inputTweet,
                 date: Date.now()
         }
-        firebase.db.collection('tweets').doc(user.uid).set(tweet)
-    }
-
         
+        firebase.db.collection('tweets').add(tweet)
+        
+        }
     }
   
-
-
+   
     return ( 
         <Formik initialValues={{inputTweet: ""}}
         validationSchema={Yup.object({
@@ -131,12 +145,14 @@ const TweetForm = () => {
         })}
         
         onSubmit={(values, {setSubmitting, resetForm}) => {
-            
                 setSubmitting(true)
+
                 console.log(values)
                 createTweet(values)
+               
                 resetForm()
-                setSubmitting(false);
+                
+                setSubmitting(false)
             
         }}>
             {( {isValid, dirty })=> (
