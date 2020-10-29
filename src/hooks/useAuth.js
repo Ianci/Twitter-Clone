@@ -11,7 +11,7 @@ function useAuth (){
             if( user) {
                 setAuthUser(user)
             } else {
-                setAuthUser(null)
+                setAuthUser(null) 
             }
         });
         return () => unsuscribe();
