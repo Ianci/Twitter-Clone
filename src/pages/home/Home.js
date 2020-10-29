@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar'
 import Mainpage from '../../components/main/Mainpage'
 import TweetWidgets from '../../components/rightSection/TweetWidgets'
@@ -18,31 +18,14 @@ const useStyles = makeStyles((theme)=>({
 }))
 const Home = () => {
     const classes = useStyles()
-    const { user } = useContext(FirebaseContext)
-    const history = useHistory()
-
-    console.log(user)
-
-    //Security. Si no hay usuario logueado, push to welcome page
-    useEffect(() => {
-        if(!user){
-            history.push('/')
-        }
-    }, [])
 
     return ( 
         <>
-        
-
         <div className={classes.container}>
-
         <Sidebar />
         <Mainpage />
         <TweetWidgets />
-
         </div>
-
-        
         </>
      );
 }
