@@ -3,6 +3,7 @@ import { useFirestoreDocData, useFirestore, SuspenseWithPerf } from 'reactfire';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { FirebaseContext } from '../../firebase/index'
+import { useUser} from 'reactfire'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 const SidebarAvatar = () => {
     const classes = useStyles()
-    const { user } = useContext(FirebaseContext)
+    const  user  = useUser()
     
    
     

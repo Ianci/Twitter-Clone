@@ -3,7 +3,7 @@ import { makeStyles} from '@material-ui/core/styles';
 import { Formik, Form, ErrorMessage, Field} from 'formik'
 import * as Yup from 'yup';
 import { FirebaseContext } from '../../firebase'
-
+import { useUser } from 'reactfire'
 import { TextField, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -67,6 +67,12 @@ const useStyles = makeStyles((theme)=>({
         padding: "0 100px",
         display: "flex",
        
+    },
+    addProfilePicture: {
+        fontSize: "1.2rem",
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
+        fontWeight: 800,
+        lineHeight: 1.3325,
     }
     
 }))
@@ -84,7 +90,7 @@ const Register = () => {
 
     //Context
     const { user, firebase } = useContext(FirebaseContext)
-
+    
     //FileUploader states
     const [ imageName, setImageName] = useState('')
     const [ progress, setProgress ] = useState(0)
@@ -110,44 +116,46 @@ const Register = () => {
             tweets: [],
             
         }
-        if(userInfo.avatar !== undefined){
-            firebase.db.collection('users').doc(user.uid).set(userInfo)
-            setTimeout(() => {
-            history.push('/home')
-            }, 3000);
-        }
+            if(user !== undefined){
+                firebase.db.collection('users').doc(user.uid).set(userInfo)
+                setTimeout(() => {
+                history.push('/home')
+                }, 3000);
+            }
+           
+        
       
     }
     
    
-    //FileUploader Functions
-    const handleUploadStart = () => {
-        setIsUploading(true)
-        setProgress(0)
-    }
-    const handleProgress = progress => {
-        setProgress({ progress })
-    }
+   //FileUploader Functions
+   const handleUploadStart = () => {
+    setIsUploading(true)
+    setProgress(0)
+}
+const handleProgress = progress => {
+    setProgress({ progress })
+}
+
+const handleUploadSuccess = filename => {
+    setImageName(filename)
+    setProgress(100)
+    setIsUploading(false)
+    firebase
+    .storage
+    .ref("users")
+    .child(filename)
+    .getDownloadURL()
+    .then(url => {
+        setImageUrl(url)
+        console.log(url)
+    });
     
-    const handleUploadSuccess = filename => {
-        setImageName(filename)
-        setProgress(100)
+    }
+    const handleUploadError = error => {
         setIsUploading(false)
-        firebase
-        .storage
-        .ref("users")
-        .child(filename)
-        .getDownloadURL()
-        .then(url => {
-            setImageUrl(url)
-            console.log(url)
-        });
         
-        }
-        const handleUploadError = error => {
-            setIsUploading(false)
-            
-        }
+    }
 
     return ( 
         
@@ -210,8 +218,12 @@ const Register = () => {
 
                          <ErrorMessage name="date" style={{display: "flex"}} component="small" className={classes.errorMessage} />
 
-                        <label htmlFor="upload-photo">
-                        <FileUploader
+                      
+                        
+
+                       
+                            <p className={classes.addProfilePicture}> Añada su foto de perfil</p>
+                            <FileUploader
                             accept="image/*"
                             randomizeFilename
                             storageRef={firebase.storage.ref("users")}
@@ -219,22 +231,11 @@ const Register = () => {
                             onUploadError={handleUploadError}
                             onUploadSuccess={handleUploadSuccess}
                             onProgress={handleProgress}
-                            className="fileUploader" 
-                            style={{display: "none"}}
-                            id="upload-photo"
+                            className={classes.fileUploader}
+                         
                             />
-
-                        <Fab
-                            color="secondary"
-                            size="small"
-                            component="span"
-                            aria-label="add"
-                            variant="extended"
-                            style={{margin: '12px'}}
-                        >
-                            <AddIcon /> Añada su foto de perfil
-                        </Fab>
-                        </label>
+                        
+                        
 
                        
                         <SubmitFormButton 

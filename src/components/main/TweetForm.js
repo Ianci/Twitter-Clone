@@ -76,9 +76,10 @@ const TweetForm = () => {
 
    //ReactFire User
    const reactFireUser = useUser()
+
+  
     //Acá se va a guardar en el state la información del usuario, y luego la vamos a usar para
     //rellenar los datos del tweet y lo vamos a almacenar en la BD de Firebase
-   
     let avatarTweet;
     let username;
     let name;
@@ -92,9 +93,11 @@ const TweetForm = () => {
         })
         
     }
+
     //Nos traemos tanto los datos del user como sus tweets
     useEffect(() => {
         const getUserInfo = () =>{
+            if(!user) return null;
             if(user){
                 firebase.db.collection('users').where('id', '==', user.uid)
                 .onSnapshot(getInfo)
@@ -126,6 +129,7 @@ const TweetForm = () => {
         setTweetInformation(information)
     }
     
+
     //Funcion para crear tweets
     async function createTweet(values){
         if(!user){
@@ -146,25 +150,29 @@ const TweetForm = () => {
         firebase.db.collection('tweets').add(tweet)
         }
     }
+
     //Function for avatar 
     function ShowAvatar(){
-        const response = useFirestore()
-        .collection('users')
-        .doc(reactFireUser.uid)
-        const avatarUser = useFirestoreDocData(response)
-        return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
-      }
+        
+            const response = useFirestore()
+            .collection('users')
+            .doc(user.uid)
+            const avatarUser = useFirestoreDocData(response)
+            return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
+        }
+        
+      
 
       //FileUploader Functions
-    const handleUploadStart = () => {
+        const handleUploadStart = () => {
         setIsUploading(true)
         setProgress(0)
     }
-    const handleProgress = progress => {
+        const handleProgress = progress => {
         setProgress({ progress })
     }
     
-    const handleUploadSuccess = filename => {
+        const handleUploadSuccess = filename => {
         setImageName(filename)
         setProgress(100)
         setIsUploading(false)
