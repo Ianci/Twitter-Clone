@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
-import Img2 from '../../images/img2.jpeg'
+import { useUser } from 'reactfire'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -10,22 +10,25 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PublishIcon from "@material-ui/icons/Publish";
+import { FirebaseContext } from '../../firebase';
 
 const useStyles = makeStyles((theme) =>({
     tweetAvatar: {
         margin: theme.spacing(2),
-        height: theme.spacing(6),
-        width: theme.spacing(6),
+        height: theme.spacing(7),
+        width: theme.spacing(7),
         marginRight: theme.spacing(1),
         padding: theme.spacing(1),
         },
-
     tweetContainer: {
         display: "flex",
         maxWidth: "600px",
         wordBreak: "break-word",
         width: "600px",
         borderBottom: "1px solid grey"
+    },
+    tweetCard:{
+        minWidth: "500px"
     },
     tweetInfo: {
         height: "fit-content",
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) =>({
     },
     tweetInfoName: {
         color: "#fff",
-        fontSize: "1rem",
+        fontSize: "1.1rem",
         lineHeight: 1,
         fontWeight: 800,
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
@@ -51,7 +54,8 @@ const useStyles = makeStyles((theme) =>({
     tweetInfoAccount: {
         color: "grey",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Ubuntu, Helvetica Neue, sans-serif",
-        paddingRight: theme.spacing(1)
+        paddingRight: theme.spacing(1),
+        fontSize: "1.1rem"
     },
     tweetText: {
         padding: "0 10px",
@@ -74,41 +78,64 @@ const useStyles = makeStyles((theme) =>({
         padding: theme.spacing(2),
         float: "center",
         width: "480px",
-        height: "200px",
         objectPosition: "bottom",
         objectFit: "cover",
+    },
+    favCounter: {
+        padding: "9px",
+        paddingBottom: 0,
+        fontSize: "1.4rem",
+        display: "inline-flex",
+        position: "relative",
+        bottom: "4px",
+        color: "#fff"
     }
 
 }))
-const Tweet = () => {
-    const classes = useStyles()
-    //Menu state
 
-    //Menu state
-    const [anchorEl, setAnchorEl] = useState(null);
+const Tweet = ({tweet}) => {
+    const { firebase } = useContext(FirebaseContext)
+    const user = useUser()
+    const classes = useStyles()
+   //State del menu de MaterialUI
+   const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
       };
-    
       const handleClose = () => {
         setAnchorEl(null);
       };
+
+   
+      //Mostrar el menu de Eliminar
+      function canDelete(){
+        if(user.uid === tweet.id){
+            return true
+        }
+      }
+      //Funcion para eliminar tweet
+      function deleteTweet(){
+            let query = firebase.db.collection('tweets').where('tweetContent', '==' ,tweet.tweetContent)
+            query.get().then((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    doc.ref.delete()
+                })
+            })
+            handleClose()
+      }
       
-      //
-
-
+      
     return ( 
         <div className={classes.tweetContainer}>
             <div className={classes.tweetAvatar}>
-                <Avatar src={Img2} alt="account-profile" className={classes.root}/>
+            <Avatar src={tweet.avatarTweet} alt="account-profile" className={classes.root}/>
             </div>
             <div className={classes.tweetCard}>
                 <div className={classes.header}>
                     <div className={classes.tweetInfo}>
-                        <span className={classes.tweetInfoName}>Ianci</span> {""}
-                        <span className={classes.tweetInfoAccount}>@ianbrg11  ·</span> {""}
-                        <span className={classes.tweetInfoAccount}>1min</span>
+                        <span className={classes.tweetInfoName}>{tweet.name}</span> {""}
+                        <span className={classes.tweetInfoAccount}>@{tweet.username}</span>
                         <div className={classes.iconTweet}>
                             <MoreHorizIcon onClick={handleClick} style={{color: "white", margin: "0.5rem"}}/>
                         </div>
@@ -122,7 +149,9 @@ const Tweet = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>Eliminar <DeleteIcon /></MenuItem>
+                        { canDelete() &&
+                            <MenuItem onClick={deleteTweet}>Eliminar <DeleteIcon /></MenuItem>
+                        }
                         <MenuItem onClick={handleClose}>Fijar en tu perfil</MenuItem>
                         <MenuItem onClick={handleClose}>Tweet insertado</MenuItem>
                         <MenuItem onClick={handleClose}>Ver actividad del tweet</MenuItem>
@@ -130,14 +159,19 @@ const Tweet = () => {
                     
                     <div className={classes.tweetBody}>
                         <p className={classes.tweetText}>
-                        Bienvenido/a a mi clon de Twitter !!!
+                        {tweet.tweetContent}
                         </p>
-                        <img src="https://cdna.artstation.com/p/assets/images/images/018/582/132/original/nisha-batham-panda-second.gif?1559906790&dl=1" alt="no-alt" className={classes.image_user_Tweet}/>
-                    </div>
+                        {tweet.imageTweet !== "" ? 
+                       
+                        <img src={tweet.imageTweet} alt="no-alt" className={classes.image_user_Tweet}/>
+                        : null
+                        }
+                        </div>
                     <div className={classes.tweetFooter}>
                         <ChatBubbleOutlineIcon fontSize="small" color="secondary"/>
                         <RepeatIcon fontSize="small" color="secondary"/>
-                        <FavoriteBorderIcon fontSize="small" color="secondary"/>
+                        
+                        <span className={classes.favorites}><FavoriteBorderIcon fontSize="small" color="secondary" /><span className={classes.favCounter}>{tweet.favs}</span></span>
                         <PublishIcon fontSize="small" color="secondary"/>
                     </div>
             </div>
