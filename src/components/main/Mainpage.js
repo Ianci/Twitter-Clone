@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useContext, useState} from 'react';
 import TweetForm from './TweetForm'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from '@material-ui/core/styles';
 import Tweet from './Tweet'
+import { FirebaseContext } from '../../firebase'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -57,7 +58,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 const MainPage = () => {
     const classes = useStyles()
+    const [ tweets, setTweets ] = useState([])
+    const { firebase } = useContext(FirebaseContext)
 
+    useEffect(() => {
+        const getTweets = () => {
+            firebase.db.collection('tweets').orderBy('date', 'desc').onSnapshot(tweetSnapshot)
+        }
+        getTweets()
+    }, [])
+        function tweetSnapshot(snapshot){
+            const tweetDB = snapshot.docs.map(doc=>{
+                return{
+                    id: doc.id,
+                    ...doc.data()
+                }
+            })
+            setTweets(tweetDB)
+        }
     function scrollToTop(){
         document.documentElement.scrollTop = 0
         
@@ -73,7 +91,12 @@ const MainPage = () => {
                     <TweetForm />
             </div>
             <div className={classes.feedSection}>
-            <Tweet />
+            {tweets.map((tweet) => (
+                <Tweet 
+                key={tweet.id}
+                tweet={tweet}/>
+            ))}
+            
             </div>
             
         </div>
