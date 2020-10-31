@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
-import Img2 from '../../images/img2.jpeg'
+
 import TextareaAutosize from 'react-autosize-textarea';
 import { ButtonBase } from '@material-ui/core';
 import { TweetIcons } from './TweetIcons';
-import { formatDistance } from 'date-fns'
+import { useFirestoreDocData, useFirestore, SuspenseWithPerf, useUser } from 'reactfire';
 import { SmallTweetButton } from '../sidebar/ButtonSideBar';
 import { Formik, Form, ErrorMessage, Field} from 'formik';
 import { FirebaseContext } from '../../firebase';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import FileUploader from 'react-firebase-file-uploader'
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -54,8 +55,11 @@ const useStyles = makeStyles((theme) =>({
         lineHeight: 1,
         fontSize: "1rem",
         padding: "4px"
-
+    },
+    fileUploader: {
+        margin: theme.spacing(1)
     }
+
 }))
 const TweetForm = () => {
     const classes = useStyles()
@@ -63,13 +67,22 @@ const TweetForm = () => {
     const history = useHistory()
     const [ userInformation, setUserInformation ] = useState([])
    const  [ tweetInformation, setTweetInformation] = useState([])
-    
+   
+   //FileUploader states
+   const [ imageName, setImageName] = useState('')
+   const [ progress, setProgress ] = useState(0)
+   const [ isUploading, setIsUploading ] =useState(false)
+   const [ imageUrl, setImageUrl ] = useState('')
+
+   //ReactFire User
+   const reactFireUser = useUser()
     //Acá se va a guardar en el state la información del usuario, y luego la vamos a usar para
     //rellenar los datos del tweet y lo vamos a almacenar en la BD de Firebase
    
     let avatarTweet;
     let username;
     let name;
+
     if(userInformation.length !== 0){
         userInformation.map((data)=>{
             username = data.username
@@ -127,15 +140,49 @@ const TweetForm = () => {
                 username: username,
                 favs: 0,
                 tweetContent: values.inputTweet,
-                date: Date.now()
+                date: Date.now(),
+                imageTweet: imageUrl
         }
-        
         firebase.db.collection('tweets').add(tweet)
-        
         }
     }
-  
-   
+    //Function for avatar 
+    function ShowAvatar(){
+        const response = useFirestore()
+        .collection('users')
+        .doc(reactFireUser.uid)
+        const avatarUser = useFirestoreDocData(response)
+        return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
+      }
+
+      //FileUploader Functions
+    const handleUploadStart = () => {
+        setIsUploading(true)
+        setProgress(0)
+    }
+    const handleProgress = progress => {
+        setProgress({ progress })
+    }
+    
+    const handleUploadSuccess = filename => {
+        setImageName(filename)
+        setProgress(100)
+        setIsUploading(false)
+        firebase
+        .storage
+        .ref("tweets")
+        .child(filename)
+        .getDownloadURL()
+        .then(url => {
+            setImageUrl(url)
+            console.log(url)
+        });
+        
+        }
+        const handleUploadError = error => {
+            setIsUploading(false)
+            
+        }
     return ( 
         <Formik initialValues={{inputTweet: ""}}
         validationSchema={Yup.object({
@@ -159,7 +206,10 @@ const TweetForm = () => {
             <>
             
             <div className={classes.avatarTweet}>
-                <Avatar src={Img2} alt="account-profile" className={classes.root}/>
+            <SuspenseWithPerf fallback={<p style={{display: "none"}}>Loading image...</p>}
+            traceId={"load-burrito-status"} >
+            <ShowAvatar />
+            </SuspenseWithPerf>
             </div>
             <Form>
             <div className={classes.tweetBody}>
@@ -179,7 +229,6 @@ const TweetForm = () => {
                         )
                     })}
 
-                    
                 
                 <div className={classes.sendTweet} >
                     <SmallTweetButton disabled={!(isValid & dirty)}
@@ -189,6 +238,17 @@ const TweetForm = () => {
                 </div>
 
             </div>
+            <FileUploader
+                            accept="image/*"
+                            randomizeFilename
+                            storageRef={firebase.storage.ref("tweets")}
+                            onUploadStart={handleUploadStart}
+                            onUploadError={handleUploadError}
+                            onUploadSuccess={handleUploadSuccess}
+                            onProgress={handleProgress}
+                            className={classes.fileUploader}
+                         
+                            />
             </Form>
             </>
             )}
