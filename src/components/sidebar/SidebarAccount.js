@@ -5,28 +5,38 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import  SidebarAvatar  from './SidebarAvatar'
 import { FirebaseContext } from '../../firebase'
 import { useHistory } from 'react-router-dom'
-
+import { useFirestoreDocData, useFirestore, SuspenseWithPerf } from 'reactfire';
 const SidebarAccount = () => {
     const { firebase, user } = useContext(FirebaseContext)
-    
     const history = useHistory()
+    //Menu state de materialUi
+    const [anchorEl, setAnchorEl] = useState(null);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
 
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
+
+    if(!user) return null;
+    //Function para el nombre de la cuenta
+    function UserName(){
+      const response = useFirestore()
+      .collection('users')
+      .doc(user.uid)
+      const userName = useFirestoreDocData(response)
+      return <MenuItem onClick={userLogOut}>Cerrar la sesión de @{userName.username}</MenuItem>
+    }
+
+    //Cerrar sesion
     async function userLogOut () {
       await firebase.logOut()
       handleClose()
       history.push("/")
     }
 
-    //Menu state
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
     
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
 
     return ( 
         <>
@@ -46,7 +56,9 @@ const SidebarAccount = () => {
             <SidebarAvatar />
         </MenuItem>
         <MenuItem onClick={handleClose}>Agregar una cuenta existente</MenuItem>
-        <MenuItem onClick={userLogOut}>Cerrar la sesión de @ianbrg11</MenuItem>
+        <SuspenseWithPerf fallback={<p>Loading...</p>}>
+        <UserName />
+        </SuspenseWithPerf>
         </Menu>
         </>
      );
