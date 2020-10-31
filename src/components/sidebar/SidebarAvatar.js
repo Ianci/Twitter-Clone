@@ -1,5 +1,5 @@
-import React, { useContext} from 'react';
-import Img2 from '../../images/img2.jpeg'
+import React, { useEffect,useState,useContext} from 'react';
+import { useFirestoreDocData, useFirestore, SuspenseWithPerf } from 'reactfire';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { FirebaseContext } from '../../firebase/index'
@@ -15,20 +15,45 @@ const useStyles = makeStyles((theme) => ({
   }));
 const SidebarAvatar = () => {
     const classes = useStyles()
-    
     const { user } = useContext(FirebaseContext)
-
-    //Evitar que throwee error al cargar por primera vez. User arranca null
     
-    if(!user) return null;
+   
+    
+    if(!user) return null
 
+    //Function for avatar 
+    function ShowAvatar(){
+      const response = useFirestore()
+      .collection('users')
+      .doc(user.uid)
+      const avatarUser = useFirestoreDocData(response)
+      return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
+    }
+      
+    //Function for UserName
+    function ShowUserName(){
+      const response = useFirestore()
+      .collection('users')
+      .doc(user.uid)
+      const userName = useFirestoreDocData(response)
+      return <span className="s-account">{userName.username}</span>
+    }
+ 
+    
+  
     return ( 
         <>
-        
-        <Avatar src="" alt="account-profile" className={classes.root}/>
+
+        <SuspenseWithPerf fallback={<p style={{display: "none"}}>Loading image...</p>}
+        traceId={"load-burrito-status"} >
+        <ShowAvatar />
+        </SuspenseWithPerf>
+
         <div className="account-name">
-            <p className="p-name">hola</p>
-            <span className="s-account">{user.displayName}</span>
+            <p className="p-name">{user.displayName}</p>
+            <SuspenseWithPerf fallback={<p style={{display: "none"}}>Loading...</p>}>
+            <ShowUserName />
+            </SuspenseWithPerf>
         </div>
         
         </>
