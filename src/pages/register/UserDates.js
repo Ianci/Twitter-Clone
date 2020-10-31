@@ -4,7 +4,7 @@ import { Formik, Form, ErrorMessage, Field} from 'formik'
 import * as Yup from 'yup';
 import { FirebaseContext } from '../../firebase'
 
-import { TextField, Fab, Button } from '@material-ui/core'
+import { TextField, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import TweetBox from '../../images/TweetBox.svg'

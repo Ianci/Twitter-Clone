@@ -3,14 +3,14 @@ import { makeStyles} from '@material-ui/core/styles';
 import { Formik, Form, ErrorMessage, Field} from 'formik'
 import * as Yup from 'yup';
 import firebase from '../../firebase'
-import  TimePicker  from './TimePicker'
-import { TextField, Fab, Button } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add';
+
+import { TextField } from '@material-ui/core'
+
 import TwitterIcon from '@material-ui/icons/Twitter';
 import TweetRegister from '../../images/TweetRegister.svg'
 import SubmitFormButton from './SubmitFormBtn'
-import FileUploader from 'react-firebase-file-uploader'
-import { useHistory } from 'react-router-dom'
+
+import { useHistory, Link } from 'react-router-dom'
 
 
 
@@ -165,7 +165,9 @@ const Register = () => {
                                     Crea su cuenta ahora!
                                 </SubmitFormButton>
                                 </Form>
-                                
+                                <div className={classes.comeback}>
+                                    <Link to="/"><p style={{color: "black"}}>Volver</p></Link>
+                                </div>
                                 
                                 { error && <p className={classes.errorMessage}> {errorMsg} </p>}
                             </div>
