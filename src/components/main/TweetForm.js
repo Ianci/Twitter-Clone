@@ -77,7 +77,7 @@ const TweetForm = () => {
    //ReactFire User
    const reactFireUser = useUser()
 
-  
+    
     //Acá se va a guardar en el state la información del usuario, y luego la vamos a usar para
     //rellenar los datos del tweet y lo vamos a almacenar en la BD de Firebase
     let avatarTweet;
@@ -94,10 +94,11 @@ const TweetForm = () => {
         
     }
 
+   
     //Nos traemos tanto los datos del user como sus tweets
     useEffect(() => {
         const getUserInfo = () =>{
-            if(!user) return null;
+           
             if(user){
                 firebase.db.collection('users').where('id', '==', user.uid)
                 .onSnapshot(getInfo)
@@ -153,15 +154,13 @@ const TweetForm = () => {
 
     //Function for avatar 
     function ShowAvatar(){
-        
-            const response = useFirestore()
-            .collection('users')
-            .doc(user.uid)
-            const avatarUser = useFirestoreDocData(response)
-            return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
-        }
-        
-      
+                const response = useFirestore()
+                .collection('users')
+                .doc(user.uid)
+                const avatarUser = useFirestoreDocData(response)
+                return <Avatar src={avatarUser.avatar} alt="account-profile" className={classes.root} />
+            }
+           
 
       //FileUploader Functions
         const handleUploadStart = () => {
@@ -172,18 +171,19 @@ const TweetForm = () => {
         setProgress({ progress })
     }
     
-        const handleUploadSuccess = filename => {
+    
+    const handleUploadSuccess = filename => {
         setImageName(filename)
         setProgress(100)
         setIsUploading(false)
         firebase
         .storage
-        .ref("tweets")
+        .ref("users")
         .child(filename)
         .getDownloadURL()
         .then(url => {
             setImageUrl(url)
-            console.log(url)
+            
         });
         
         }
@@ -191,6 +191,8 @@ const TweetForm = () => {
             setIsUploading(false)
             
         }
+        if(!user) return null;
+
     return ( 
         <Formik initialValues={{inputTweet: ""}}
         validationSchema={Yup.object({
@@ -206,7 +208,7 @@ const TweetForm = () => {
                 createTweet(values)
                
                 resetForm()
-                
+                setImageUrl('')
                 setSubmitting(false)
             
         }}>
@@ -249,13 +251,13 @@ const TweetForm = () => {
             <FileUploader
                             accept="image/*"
                             randomizeFilename
-                            storageRef={firebase.storage.ref("tweets")}
+                            storageRef={firebase.storage.ref("users")}
                             onUploadStart={handleUploadStart}
                             onUploadError={handleUploadError}
                             onUploadSuccess={handleUploadSuccess}
                             onProgress={handleProgress}
                             className={classes.fileUploader}
-                         
+                            
                             />
             </Form>
             </>

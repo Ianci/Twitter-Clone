@@ -76,10 +76,12 @@ const MainPage = () => {
             })
             setTweets(tweetDB)
         }
+
     function scrollToTop(){
         document.documentElement.scrollTop = 0
         
     }
+    
     return ( 
         <div className={classes.container}>
             

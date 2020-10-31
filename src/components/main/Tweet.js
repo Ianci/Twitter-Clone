@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { useUser } from 'reactfire'
@@ -98,7 +98,11 @@ const Tweet = ({tweet}) => {
     const user = useUser()
     const classes = useStyles()
    //State del menu de MaterialUI
+  
    const [anchorEl, setAnchorEl] = useState(null);
+
+
+  
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -122,9 +126,11 @@ const Tweet = ({tweet}) => {
                     doc.ref.delete()
                 })
             })
-            handleClose()
+            
       }
       
+      
+     
       
     return ( 
         <div className={classes.tweetContainer}>
@@ -169,9 +175,11 @@ const Tweet = ({tweet}) => {
                         </div>
                     <div className={classes.tweetFooter}>
                         <ChatBubbleOutlineIcon fontSize="small" color="secondary"/>
-                        <RepeatIcon fontSize="small" color="secondary"/>
+                        <RepeatIcon fontSize="small" color="secondary"/> 
+                        <span className={classes.favorites}
+                        ><FavoriteBorderIcon fontSize="small" color="secondary" 
                         
-                        <span className={classes.favorites}><FavoriteBorderIcon fontSize="small" color="secondary" /><span className={classes.favCounter}>{tweet.favs}</span></span>
+                        /><span className={classes.favCounter}>{tweet.favs}</span></span>
                         <PublishIcon fontSize="small" color="secondary"/>
                     </div>
             </div>

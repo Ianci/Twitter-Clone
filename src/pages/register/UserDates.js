@@ -116,7 +116,7 @@ const Register = () => {
             tweets: [],
             
         }
-            if(user !== undefined){
+            if(userInfo.avatar !== undefined){
                 firebase.db.collection('users').doc(user.uid).set(userInfo)
                 setTimeout(() => {
                 history.push('/home')
