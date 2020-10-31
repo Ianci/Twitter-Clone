@@ -6,7 +6,7 @@ import { TextField} from '@material-ui/core'
 import TwitterIcon from '@material-ui/icons/Twitter';
 import TweetLogin from '../../images/TweetLogin.svg'
 import SubmitFormButton from '../register/SubmitFormBtn'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 //Firebase
 import firebase from '../../firebase'
 
@@ -132,6 +132,7 @@ const Login = () => {
                     <div className={classes.containerForm}>
                         { isSubmitting ? <h1 className={classes.thanksText}>Iniciando sesion...</h1>
                         :
+                        <>
                         <Form style={{display: "flex", flexDirection: "column"}}>
                         
                         <TwitterIcon style={{height: "50px", width: "50px"}} color="primary"/>
@@ -148,7 +149,12 @@ const Login = () => {
                             Ingrese ahora!
                         </SubmitFormButton>
                         </Form>
+                        <div className={classes.comeback}>
+                            <Link to="/"><p style={{color: "black"}}>Volver</p></Link>
+                        </div>
+                       </>
                         }
+                        
                         { error && <p className={classes.errorMessage}>{error}</p>}
                     </div>
 
